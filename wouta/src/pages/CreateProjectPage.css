@@ -1,0 +1,95 @@
+/* Container principal da página de criação de projeto */
+.create-project-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título da página */
+  .create-project-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para o formulário */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Estilos para inputs de texto */
+  input[type="text"],
+  textarea,
+  input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  textarea:focus,
+  input[type="date"]:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+  
+  /* Estilo para a textarea (descrição do projeto) */
+  textarea {
+    height: 150px;
+    resize: vertical;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Estilo para a label do prazo de entrega */
+  label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  /* Botão de envio do formulário */
+  button {
+    padding: 12px;
+    background-color: #007BFF;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  /* Mensagem de erro */
+  .error-message {
+    color: #FF6347;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Espaçamento entre os campos do formulário */
+  .create-project-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
