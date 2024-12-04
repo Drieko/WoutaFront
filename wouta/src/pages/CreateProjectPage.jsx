@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { getMe } from "../api/Api"; // Importe a função getMe da sua API
+import { Link, useNavigate } from "react-router-dom"; // Importando useNavigate do react-router-dom
 import "./CreateProjectPage.css";
 
 const CreateProjectPage = () => {
@@ -10,12 +11,13 @@ const CreateProjectPage = () => {
   const [projectStatus] = useState("andamento");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
+  const navigate = useNavigate(); // Hook para navegação
 
-  // Função para obter o ID do usuário autenticado
   const getUserIdFromAPI = async () => {
     try {
-      const response = await getMe(); // Chama a função getMe que retorna os dados do usuário
-      return response.data.id; // Supondo que o ID do usuário está na propriedade "id"
+      const response = await getMe();
+      return response.data.id;
     } catch (err) {
       console.error("Erro ao buscar dados do usuário:", err);
       return null;
@@ -25,7 +27,7 @@ const CreateProjectPage = () => {
   const handleCreateProject = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); // Limpa qualquer erro anterior
+    setError("");
 
     if (!projectName || !projectDescription) {
       setError("Nome e descrição são obrigatórios.");
@@ -33,7 +35,6 @@ const CreateProjectPage = () => {
       return;
     }
 
-    // Obtenha o ID do usuário autenticado
     const userId = await getUserIdFromAPI();
     if (!userId) {
       setError("Usuário não autenticado.");
@@ -41,11 +42,10 @@ const CreateProjectPage = () => {
       return;
     }
 
-    // Criando o novo projeto com o ID do usuário autenticado
     const newProject = {
       titulo: projectName,
       description: projectDescription,
-      usuarios: [userId],  // Adiciona o ID do usuário autenticado
+      usuarios: [userId],
       prazo: projectPrazo,
       status: projectStatus,
     };
@@ -58,7 +58,7 @@ const CreateProjectPage = () => {
         return;
       }
 
-      const response = await axios.post(
+      await axios.post(
         "https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/projetos/",
         newProject,
         {
@@ -67,12 +67,15 @@ const CreateProjectPage = () => {
           },
         }
       );
-      // Após a criação, redireciona ou limpa os campos
+
       alert("Projeto criado com sucesso!");
-      // Resetar os campos após sucesso
       setProjectName("");
       setProjectDescription("");
       setProjectPrazo("");
+
+      // Redireciona para a página de projetos após a criação
+      navigate("/projetos"); // Redirecionamento para a página de projetos
+
     } catch (err) {
       setError("Erro ao criar projeto. Tente novamente.");
       console.error(err);
@@ -82,40 +85,46 @@ const CreateProjectPage = () => {
   };
 
   return (
-    <div className="create-project-container">
-      <h1>Criar Novo Projeto</h1>
+    <>
+      {/* Botão separado no canto superior esquerdo */}
+      <Link to="/projetos" className="back-button">
+        &lt; {/* Ícone de seta */}
+      </Link>
 
-      {error && <p className="error-message">{error}</p>}
+      <div className="create-project-container">
+        <h1>Criar Novo Projeto</h1>
 
-      <form onSubmit={handleCreateProject}>
-        <input
-          type="text"
-          placeholder="Nome do Projeto"
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Descrição do Projeto"
-          value={projectDescription}
-          onChange={(e) => setProjectDescription(e.target.value)}
-          required
-        />
-        
-        {/* Texto explicativo para o prazo */}
-        <label htmlFor="projectPrazo">Prazo de entrega</label>
-        <input
-          type="date"
-          id="projectPrazo"
-          value={projectPrazo}
-          onChange={(e) => setProjectPrazo(e.target.value)}
-        />
+        {error && <p className="error-message">{error}</p>}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Criando..." : "Criar Projeto"}
-        </button>
-      </form>
-    </div>
+        <form onSubmit={handleCreateProject}>
+          <input
+            type="text"
+            placeholder="Nome do Projeto"
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
+            required
+          />
+          <textarea
+            placeholder="Descrição do Projeto"
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
+            required
+          />
+
+          <label htmlFor="projectPrazo">Prazo de entrega</label>
+          <input
+            type="date"
+            id="projectPrazo"
+            value={projectPrazo}
+            onChange={(e) => setProjectPrazo(e.target.value)}
+          />
+
+          <button type="submit" disabled={loading}>
+            {loading ? "Criando..." : "Criar Projeto"}
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

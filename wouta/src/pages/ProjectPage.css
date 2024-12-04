@@ -9,10 +9,11 @@
   margin: auto;
 }
 
+/* Título */
 h1 {
   margin-bottom: 2rem;
   font-size: 2.5rem;
-  color: #333; /* Cor do título principal (Projetos Recentes) */
+  color: #333;
 }
 
 /* Estilo para a mensagem de "Nenhum projeto encontrado" */
@@ -32,7 +33,7 @@ h1 {
   background-color: #e0e0e0;
 }
 
-/* Estilo do círculo "Adicionar" (se houver) */
+/* Estilo do círculo "Adicionar" */
 .add-circle {
   display: flex;
   align-items: center;
@@ -52,6 +53,7 @@ h1 {
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
+  width: 100%;
 }
 
 /* Estilo para os cards de projetos */
@@ -63,11 +65,11 @@ h1 {
   width: 280px;
   padding: 1.5rem;
   border-radius: 10px;
-  background-color: #fff; /* Fundo branco para o card */
-  color: #333; /* Cor do texto dentro do card */
+  background-color: #fff;
+  color: #333;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  position: relative; /* Para posicionar o menu de opções no canto */
+  position: relative;
 }
 
 .project-card:hover {
@@ -76,23 +78,23 @@ h1 {
 
 .project-card h3 {
   font-size: 1.2rem;
-  color: #333; /* Cor do título do projeto */
+  color: #333;
 }
 
 .project-card p {
   font-size: 1rem;
-  color: #777; /* Cor da descrição do projeto (cinza) */
+  color: #777;
 }
 
 .project-card .project-status {
   font-size: 0.9rem;
-  color: #007bff; /* Cor do status do projeto */
+  color: #007bff;
   font-weight: bold;
 }
 
 .project-card .project-date {
   font-size: 0.9rem;
-  color: #888; /* Cor da data ou prazo do projeto */
+  color: #888;
 }
 
 /* Estilos do menu de opções (três pontinhos) */
@@ -110,7 +112,7 @@ h1 {
 }
 
 .options-dropdown {
-  display: none; /* Menu escondido inicialmente */
+  display: none;
   position: absolute;
   top: 30px;
   right: 0;
@@ -121,8 +123,8 @@ h1 {
   z-index: 20;
 }
 
-.project-card:hover .options-dropdown {
-  display: block; /* Exibe o menu ao passar o mouse */
+.project-options:hover .options-dropdown {
+  display: block;
 }
 
 .options-dropdown ul {
@@ -150,8 +152,101 @@ h1 {
   padding: 1rem;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .create-project-button:hover {
   background-color: #218838;
+}
+
+/* Botão de voltar */
+.close-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  color: #000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-button:hover {
+  background-color: #f44336;
+  border-color: #fff;
+  color: #fff;
+}
+
+.close-button:focus {
+  outline: none;
+}
+
+/* Barra de pesquisa */
+.search-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-input {
+  width: 80%;
+  max-width: 800px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 768px) {
+  .projects-container {
+    padding: 1rem;
+  }
+
+  .project-card {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .search-input {
+    width: 90%;
+  }
+
+  .create-project-button {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-container {
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .project-card {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
 }

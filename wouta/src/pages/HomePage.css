@@ -8,6 +8,7 @@
     justify-content: center;
     font-family: "Arial", sans-serif;
     text-align: center;
+    position: relative; /* Necessário para o posicionamento absoluto do user-info */
 }
 
 /* Estilo para o título da HomePage */
@@ -32,17 +33,6 @@
     gap: 20px;
 }
 
-.button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
 /* Estilo para o botão de Entrar */
 .login-button {
     background-color: blue;
@@ -57,8 +47,61 @@
 .button {
     background-color: #007bff;
     color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
 .button:hover {
     background-color: #0056b3;
+}
+
+/* Estilo para as informações do usuário no canto superior direito */
+.user-info {
+    position: fixed; /* Altera de 'absolute' para 'fixed' */
+    top: 10px;
+    right: 10px; /* Coloca bem na borda direita */
+    background-color: #f4f4f4;
+    padding: 8px 12px; /* Diminui o padding */
+    border-radius: 5px;
+    font-size: 0.9rem; /* Diminui o tamanho da fonte */
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto; /* Ajusta para um tamanho flexível */
+}
+
+/* Foto do usuário - Círculo */
+.user-photo {
+    width: 30px; /* Diminui o tamanho da foto */
+    height: 30px; /* Diminui o tamanho da foto */
+    border-radius: 50%;
+    background-color: #ccc; /* Cor de fundo para representar uma imagem */
+    margin-right: 8px; /* Diminui o espaçamento entre a foto e o texto */
+}
+
+/* Detalhes do usuário */
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tamanho e estilo do username */
+.username {
+    font-weight: bold;
+    font-size: 1rem; /* Diminui um pouco o tamanho do nome */
+}
+
+/* Tamanho e estilo do ID */
+.user-id {
+    font-size: 0.8rem; /* Diminui ainda mais o tamanho do ID */
+    color: #666;
 }

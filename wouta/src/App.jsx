@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage"
 import HomePage from "./pages/HomePage";
 import ProjectPage from "./pages/ProjectPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
+import EditProjectPage from "./pages/EditProjectPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/Home" element={<HomePage />} />
         <Route path="/Projetos" element={<ProjectPage />} />
         <Route path="/Create" element={<CreateProjectPage />} />
+        <Route path="/Edit/:projectId" element={<EditProjectPage />} />
       </Routes>
     </Router>
   );

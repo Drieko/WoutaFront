@@ -93,3 +93,18 @@
     gap: 20px;
   }
   
+  /* Botão separado no canto superior esquerdo */
+.back-button {
+  position: fixed; /* Fixa o botão no canto da janela */
+  top: 10px; /* Distância da parte superior */
+  left: 10px; /* Distância da parte esquerda */
+  font-size: 2rem; /* Tamanho da seta */
+  color: #007bff; /* Cor da seta */
+  text-decoration: none; /* Remove o sublinhado */
+  font-weight: bold; /* Deixa em negrito */
+  z-index: 100; /* Garante que fique acima do resto do conteúdo */
+}
+
+.back-button:hover {
+  color: #0056b3; /* Cor ao passar o mouse */
+}
