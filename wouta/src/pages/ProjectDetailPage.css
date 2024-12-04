@@ -1,0 +1,129 @@
+/* Contêiner principal */
+.project-details-container {
+    position: relative;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  /* Botão de Voltar (X) no canto superior esquerdo */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Botão para Criar Nova Tarefa (verde) no canto superior direito */
+  .create-task-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #28a745; /* Cor verde */
+    color: white;
+    border: none;
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100; /* Garantir que o botão fique acima de outros elementos */
+  }
+  
+  /* Ajuste no botão para que fique acima do conteúdo */
+  .project-title {
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .project-description {
+    color: #777;
+    font-size: 16px;
+  }
+  
+  .project-status {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Contêiner para as tarefas */
+  .tasks-list-container {
+    margin-top: 150px; /* Distância do topo para dar espaço aos detalhes */
+    display: flex;
+    flex-wrap: wrap; /* Permite que as tarefas quebrem para a linha seguinte, se necessário */
+    gap: 20px; /* Espaçamento entre as tarefas */
+    justify-content: flex-start; /* Alinha as tarefas à esquerda */
+  }
+  
+  /* Estilização das tarefas (cards) */
+  .task-card {
+    background-color: #f4f4f4;
+    padding: 15px;
+    width: 300px; /* Definindo uma largura fixa para as tarefas */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* Espaçamento inferior entre as tarefas */
+    transition: transform 0.3s ease; /* Efeito de transição ao passar o mouse */
+  }
+  
+  /* Adicionando um efeito ao passar o mouse sobre as tarefas */
+  .task-card:hover {
+    transform: translateY(-5px); /* Leve elevação das tarefas ao passar o mouse */
+  }
+  
+  /* Estilos para cada prioridade das tarefas */
+  .task-card.baixa {
+    border-left: 5px solid green;
+  }
+  
+  .task-card.media {
+    border-left: 5px solid yellow;
+  }
+  
+  .task-card.alta {
+    border-left: 5px solid red;
+  }
+  
+  /* Estilização do Modal para criar tarefas */
+  .create-task-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    width: 400px;
+  }
+  
+  /* Inputs e Botões do Modal */
+  .create-task-modal input,
+  .create-task-modal textarea,
+  .create-task-modal select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .create-task-modal button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .create-task-modal button:hover {
+    background-color: #218838;
+  }
+  

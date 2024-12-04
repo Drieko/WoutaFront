@@ -6,6 +6,8 @@ import HomePage from "./pages/HomePage";
 import ProjectPage from "./pages/ProjectPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import EditProjectPage from "./pages/EditProjectPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+
 
 const App = () => {
   return (
@@ -18,6 +20,7 @@ const App = () => {
         <Route path="/Projetos" element={<ProjectPage />} />
         <Route path="/Create" element={<CreateProjectPage />} />
         <Route path="/Edit/:projectId" element={<EditProjectPage />} />
+        <Route path="/projeto/:projectId" element={<ProjectDetailPage />}  />
       </Routes>
     </Router>
   );

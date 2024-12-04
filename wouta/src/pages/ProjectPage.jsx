@@ -121,8 +121,19 @@ const ProjectPage = () => {
   );
 
   // Função para abrir o dropdown
-  const handleOpenDropdown = (projectId) => {
+  const handleOpenDropdown = (event, projectId) => {
+    event.stopPropagation(); // Impede que o clique nos três pontinhos redirecione para o projeto
     setActiveDropdown(activeDropdown === projectId ? null : projectId);
+  };
+
+  // Função para redirecionar ao clicar no container do projeto
+  const handleProjectClick = (projectId) => {
+    navigate(`/projeto/${projectId}`); // Navega para a página de detalhes do projeto
+  };
+
+  // Função para impedir a navegação ao clicar nas opções do dropdown
+  const handleOptionClick = (event) => {
+    event.stopPropagation(); // Impede que o clique na opção do menu redirecione para o projeto
   };
 
   return (
@@ -152,7 +163,12 @@ const ProjectPage = () => {
       ) : (
         <div className="projects-list">
           {filteredProjects.map((project) => (
-            <div key={project.id} className="project-card" style={{ backgroundColor: project.color }}>
+            <div
+              key={project.id}
+              className="project-card"
+              style={{ backgroundColor: project.color }}
+              onClick={() => handleProjectClick(project.id)} // Redireciona para o projeto ao clicar
+            >
               <h3>{project.titulo}</h3> {/* Título do projeto */}
               <p>{project.description}</p> {/* Descrição */}
               <p>Status: {project.status}</p> {/* Status */}
@@ -164,15 +180,21 @@ const ProjectPage = () => {
               >
                 <FaEllipsisV
                   className="options-icon"
-                  onClick={() => handleOpenDropdown(project.id)} // Alterna entre abrir/fechar o dropdown
+                  onClick={(event) => handleOpenDropdown(event, project.id)} // Passa o evento para o método
                 />
                 {activeDropdown === project.id && (
                   <div className="options-dropdown">
                     <ul>
                       {/* Exibe a opção para convidar membros */}
-                      <li onClick={() => handleInviteMember(project.id)}>Convidar Membros</li>
-                      <li onClick={() => handleEditProject(project.id)}>Editar Projeto</li>
-                      <li onClick={() => handleDeleteProject(project.id)}>Apagar Projeto</li>
+                      <li onClick={(event) => { handleOptionClick(event); handleInviteMember(project.id); }}>
+                        Convidar Membros
+                      </li>
+                      <li onClick={(event) => { handleOptionClick(event); handleEditProject(project.id); }}>
+                        Editar Projeto
+                      </li>
+                      <li onClick={(event) => { handleOptionClick(event); handleDeleteProject(project.id); }}>
+                        Apagar Projeto
+                      </li>
                     </ul>
                   </div>
                 )}
