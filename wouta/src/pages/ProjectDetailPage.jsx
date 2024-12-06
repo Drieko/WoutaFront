@@ -1,30 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './ProjectDetailPage.css';
 import axios from 'axios';
-import { FaChevronLeft } from 'react-icons/fa'; // Adicione o ícone se necessário
-import { FaPlus } from 'react-icons/fa'; // Ícone para "Criar Tarefa"
+import "./ProjectDetailPage.css";
+import { FaTimes, FaPlus } from 'react-icons/fa'; // Ícones
 
 const ProjectDetailsPage = () => {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState({
+  const [comentarios, setComentarios] = useState([]);  // Estado para comentários
+  const [newComment, setNewComment] = useState("");  // Estado para novo comentário
+  const [newTask, setNewTask] = useState({ // Definindo o estado para a nova tarefa
     titulo: '',
     description: '',
     prazo: '',
-    prioridade: 'media',
+    prioridade: 'baixa',
   });
+  const [createTaskModal, setCreateTaskModal] = useState(false); // Controle do modal de tarefa
   const [loading, setLoading] = useState(true);
-  const [createTaskModal, setCreateTaskModal] = useState(false);
   const navigate = useNavigate();
+
+  // Função para buscar os comentários do projeto
+  const fetchComments = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Você precisa estar autenticado para acessar os comentários.");
+        return;
+      }
+
+      const response = await axios.get(
+        `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/comentariosProjeto/${projectId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setComentarios(response.data);  // Atualiza o estado dos comentários
+    } catch (error) {
+      console.error("Erro ao buscar comentários:", error);
+      alert("Erro ao buscar comentários.");
+    }
+  };
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          alert('Você precisa estar autenticado para acessar os detalhes do projeto.');
+          alert("Você precisa estar autenticado para acessar os detalhes do projeto.");
           return;
         }
 
@@ -40,17 +66,17 @@ const ProjectDetailsPage = () => {
         setProject(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Erro ao buscar detalhes do projeto:', error);
-        alert('Erro ao buscar detalhes do projeto.');
+        console.error("Erro ao buscar detalhes do projeto:", error);
+        alert("Erro ao buscar detalhes do projeto.");
         setLoading(false);
       }
     };
 
     const fetchTasks = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          alert('Você precisa estar autenticado para acessar as tarefas.');
+          alert("Você precisa estar autenticado para acessar as tarefas.");
           return;
         }
 
@@ -63,17 +89,86 @@ const ProjectDetailsPage = () => {
           }
         );
 
-        const filteredTasks = response.data.filter((task) => task.projeto === projectId);
+        const filteredTasks = response.data.filter(task => task.projeto === projectId);
         setTasks(filteredTasks);
       } catch (error) {
-        console.error('Erro ao buscar tarefas:', error);
-        alert('Erro ao buscar tarefas.');
+        console.error("Erro ao buscar tarefas:", error);
+        alert("Erro ao buscar tarefas.");
       }
     };
 
     fetchProjectDetails();
     fetchTasks();
+    fetchComments();  // Carrega os comentários
   }, [projectId]);
+
+  const handleCreateComment = async () => {
+    const token = localStorage.getItem("token");  // Pega o token armazenado no localStorage
+  
+    if (!token) {
+      alert("Você precisa estar autenticado para comentar.");
+      return;
+    }
+  
+    try {
+      const response = await axios.post(
+        `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/comentariosProjeto/${projectId}/`,
+        {
+          texto: newComment,
+          projeto: projectId,  // Envia o ID do projeto
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,  // Envia o token no cabeçalho
+          },
+        }
+      );
+  
+      setComentarios([response.data, ...comentarios]);
+      setNewComment(""); // Limpa o campo de comentário
+    } catch (error) {
+      console.error("Erro ao criar comentário:", error);
+      alert("Erro ao criar comentário.");
+    }
+  };
+
+  const handleCreateTask = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Você precisa estar autenticado para criar uma tarefa.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/tarefas/`,
+        {
+          titulo: newTask.titulo,
+          description: newTask.description,
+          prazo: newTask.prazo,
+          prioridade: newTask.prioridade,
+          projeto: projectId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setTasks([response.data, ...tasks]);  // Adiciona a nova tarefa à lista
+      setCreateTaskModal(false);  // Fecha o modal
+      setNewTask({ // Limpa o estado de nova tarefa
+        titulo: '',
+        description: '',
+        prazo: '',
+        prioridade: 'baixa',
+      });
+    } catch (error) {
+      console.error("Erro ao criar tarefa:", error);
+      alert("Erro ao criar tarefa.");
+    }
+  };
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -83,64 +178,29 @@ const ProjectDetailsPage = () => {
     return <div>Projeto não encontrado.</div>;
   }
 
-  const handleGoBack = () => {
-    navigate('/projetos');
-  };
-
-  const handleCreateTask = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('Você precisa estar autenticado para criar tarefas.');
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        'https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/tarefas/',
-        {
-          projeto: projectId,
-          titulo: newTask.titulo,
-          description: newTask.description,
-          prazo: newTask.prazo,
-          prioridade: newTask.prioridade,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setTasks([response.data, ...tasks]);
-      setNewTask({ titulo: '', description: '', prazo: '', prioridade: 'media' });
-      alert('Tarefa criada com sucesso!');
-    } catch (error) {
-      console.error('Erro ao criar tarefa:', error);
-      alert('Erro ao criar tarefa.');
-    }
-  };
-
   return (
-    <div className="project-details-page">
-      {/* Cabeçalho com botão de voltar e botão de criar tarefa */}
-      <div className="header">
-      <button className="back-button" onClick={handleGoBack}>
-        <FaChevronLeft /> {/* Ícone estilizado */}
-      </button>
-        <div className="project-info">
-          <h1>{project.titulo}</h1>
-          <p>{project.description}</p>
-          <p>
-            <strong>Status:</strong> {project.status}
-          </p>
-        </div>
+    <div className="project-details-container">
+      
+      {/* Seção de Botões */}
+      <div className="button-section">
+        <button className="close-button" onClick={() => navigate("/projetos")}>
+          <FaTimes />
+        </button>
+
         <button className="create-task-button" onClick={() => setCreateTaskModal(true)}>
-          <FaPlus /> Nova Tarefa
+          <FaPlus />
         </button>
       </div>
 
-      {/* Lista de tarefas no centro */}
-      <div className="tasks-container">
+      {/* Seção de Detalhes do Projeto */}
+      <div className="project-details">
+        <h1 className="project-title">{project.titulo}</h1>
+        <p className="project-description">{project.description}</p>
+        <p className="project-status"><strong>Status:</strong> {project.status}</p>
+      </div>
+
+      {/* Seção de Tarefas */}
+      <div className="tasks-list-container">
         {tasks.length === 0 ? (
           <p>Não há tarefas para este projeto.</p>
         ) : (
@@ -155,7 +215,7 @@ const ProjectDetailsPage = () => {
         )}
       </div>
 
-      {/* Modal para criar tarefa */}
+      {/* Modal de Criar Tarefa */}
       {createTaskModal && (
         <div className="create-task-modal">
           <h2>Criar Nova Tarefa</h2>
@@ -187,6 +247,35 @@ const ProjectDetailsPage = () => {
           <button onClick={() => setCreateTaskModal(false)}>Cancelar</button>
         </div>
       )}
+
+      {/* Seção de Comentários */}
+      <div className="comments-section">
+        <h2>Comentários</h2>
+
+        {/* Seção para adicionar comentário */}
+        <div className="add-comment">
+          <textarea
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Deixe seu comentário..."
+          />
+          <button onClick={handleCreateComment}>Comentar</button>
+        </div>
+
+        {/* Lista de Comentários */}
+        <div className="comments-list">
+          {comentarios.length === 0 ? (
+            <p>Não há comentários para este projeto.</p>
+          ) : (
+            comentarios.map((comment) => (
+              <div key={comment.id} className="comment">
+                <p><strong>{comment.autor}</strong> - {comment.data_criacao}</p>
+                <p>{comment.texto}</p>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
 };
