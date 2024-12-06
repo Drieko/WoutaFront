@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import './ProjectDetailPage.css';
 import axios from 'axios';
-import { FaTimes, FaPlus } from 'react-icons/fa'; // Ícones
+import { FaChevronLeft } from 'react-icons/fa'; // Adicione o ícone se necessário
+import { FaPlus } from 'react-icons/fa'; // Ícone para "Criar Tarefa"
 
 const ProjectDetailsPage = () => {
-  const { projectId } = useParams(); // Pega o ID do projeto da URL
+  const { projectId } = useParams();
   const [project, setProject] = useState(null);
-  const [tasks, setTasks] = useState([]); // Estado para tarefas
+  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({
     titulo: '',
     description: '',
@@ -14,18 +16,18 @@ const ProjectDetailsPage = () => {
     prioridade: 'media',
   });
   const [loading, setLoading] = useState(true);
-  const [createTaskModal, setCreateTaskModal] = useState(false); // Controle do modal
-  const navigate = useNavigate(); // Para navegação
+  const [createTaskModal, setCreateTaskModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         if (!token) {
-          alert("Você precisa estar autenticado para acessar os detalhes do projeto.");
+          alert('Você precisa estar autenticado para acessar os detalhes do projeto.');
           return;
         }
-  
+
         const response = await axios.get(
           `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/projetos/${projectId}`,
           {
@@ -34,24 +36,24 @@ const ProjectDetailsPage = () => {
             },
           }
         );
-  
-        setProject(response.data); // Armazena os dados do projeto
+
+        setProject(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Erro ao buscar detalhes do projeto:", error);
-        alert("Erro ao buscar detalhes do projeto.");
+        console.error('Erro ao buscar detalhes do projeto:', error);
+        alert('Erro ao buscar detalhes do projeto.');
         setLoading(false);
       }
     };
-  
+
     const fetchTasks = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         if (!token) {
-          alert("Você precisa estar autenticado para acessar as tarefas.");
+          alert('Você precisa estar autenticado para acessar as tarefas.');
           return;
         }
-  
+
         const response = await axios.get(
           `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/tarefas/?projeto=${projectId}`,
           {
@@ -60,16 +62,15 @@ const ProjectDetailsPage = () => {
             },
           }
         );
-  
-        // Apenas tarefas do projeto corrente serão exibidas
-        const filteredTasks = response.data.filter(task => task.projeto === projectId);
-        setTasks(filteredTasks); // Armazena as tarefas filtradas
+
+        const filteredTasks = response.data.filter((task) => task.projeto === projectId);
+        setTasks(filteredTasks);
       } catch (error) {
-        console.error("Erro ao buscar tarefas:", error);
-        alert("Erro ao buscar tarefas.");
+        console.error('Erro ao buscar tarefas:', error);
+        alert('Erro ao buscar tarefas.');
       }
     };
-  
+
     fetchProjectDetails();
     fetchTasks();
   }, [projectId]);
@@ -83,13 +84,13 @@ const ProjectDetailsPage = () => {
   }
 
   const handleGoBack = () => {
-    navigate("/projetos");
+    navigate('/projetos');
   };
 
   const handleCreateTask = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
-      alert("Você precisa estar autenticado para criar tarefas.");
+      alert('Você precisa estar autenticado para criar tarefas.');
       return;
     }
 
@@ -110,36 +111,36 @@ const ProjectDetailsPage = () => {
         }
       );
 
-      setTasks([response.data, ...tasks]); // Adiciona a nova tarefa
-      setNewTask({ titulo: '', description: '', prazo: '', prioridade: 'media' }); // Reseta o formulário
-      alert("Tarefa criada com sucesso!");
+      setTasks([response.data, ...tasks]);
+      setNewTask({ titulo: '', description: '', prazo: '', prioridade: 'media' });
+      alert('Tarefa criada com sucesso!');
     } catch (error) {
-      console.error("Erro ao criar tarefa:", error);
-      alert("Erro ao criar tarefa.");
+      console.error('Erro ao criar tarefa:', error);
+      alert('Erro ao criar tarefa.');
     }
   };
 
   return (
-    <div className="project-details-container">
-      {/* Botão de Voltar (X) */}
-      <button className="close-button" onClick={handleGoBack}>
-        <FaTimes />
+    <div className="project-details-page">
+      {/* Cabeçalho com botão de voltar e botão de criar tarefa */}
+      <div className="header">
+      <button className="back-button" onClick={handleGoBack}>
+        <FaChevronLeft /> {/* Ícone estilizado */}
       </button>
-
-      {/* Botão para Criar Nova Tarefa */}
-      <button className="create-task-button" onClick={() => setCreateTaskModal(true)}>
-        <FaPlus />
-      </button>
-
-      {/* Detalhes do projeto */}
-      <div className="project-details">
-        <h1 className="project-title">{project.titulo}</h1>
-        <p className="project-description">{project.description}</p>
-        <p className="project-status"><strong>Status:</strong> {project.status}</p>
+        <div className="project-info">
+          <h1>{project.titulo}</h1>
+          <p>{project.description}</p>
+          <p>
+            <strong>Status:</strong> {project.status}
+          </p>
+        </div>
+        <button className="create-task-button" onClick={() => setCreateTaskModal(true)}>
+          <FaPlus /> Nova Tarefa
+        </button>
       </div>
 
-      {/* Lista de tarefas */}
-      <div className="tasks-list-container">
+      {/* Lista de tarefas no centro */}
+      <div className="tasks-container">
         {tasks.length === 0 ? (
           <p>Não há tarefas para este projeto.</p>
         ) : (
