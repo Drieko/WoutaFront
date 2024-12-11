@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./LoginPage.css";
 import logo from "../image/WoutaLogo.png"; 
+import { getMe } from "../api/Api";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -32,14 +33,20 @@ const LoginPage = () => {
 
       // Sucesso: Armazenar o token JWT no localStorage e redirecionar
       localStorage.setItem("token", response.data.access);
+      const responseUser = await getMe()
+
+      localStorage.setItem("userId", responseUser.data.id); // Aqui você armazena o userId também
+      console.log(localStorage.getItem("userId"))
+
+      // Redirecionar para a página inicial ou outra
       navigate("/home");
     } catch (err) {
       if (err.response) {
         if (err.response.data.detail === "No active account found with the given credentials") {
           setError("Nenhuma conta ativa encontrada com as credenciais fornecidas.");
         } else {
-        // Erro da resposta do servidor
-        setError(err.response.data.detail || "Erro ao fazer login.");
+          // Erro da resposta do servidor
+          setError(err.response.data.detail || "Erro ao fazer login.");
         }
       } else {
         // Erro na conexão ou outra falha
@@ -52,8 +59,6 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-
-      {}
       <div className="logo-container">
         <img
           src={logo}  
@@ -65,7 +70,7 @@ const LoginPage = () => {
 
       <form onSubmit={handleLogin}>
         <input
-          type="username"
+          type="text"
           placeholder="Nome de usuário"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
