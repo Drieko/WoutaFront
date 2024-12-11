@@ -1,0 +1,253 @@
+/* Container principal */
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Título */
+h1 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+/* Estilo para a mensagem de "Nenhum projeto encontrado" */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background-color: #f4f4f4;
+    border: 2px dashed #ccc;
+    padding: 4rem;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.empty-state:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilo do círculo "Adicionar" */
+.add-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: #4e73df;
+    border-radius: 50%;
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Lista de projetos */
+.projects-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Estilo para os cards de projetos */
+.project-card {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 280px;
+    padding: 1.5rem;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.project-card p {
+    font-size: 1rem;
+    color: #777;
+}
+
+.project-card .project-status {
+    font-size: 0.9rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.project-card .project-date {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Estilos do menu de opções (três pontinhos) */
+.project-options {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.options-icon {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.options-dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    z-index: 20;
+}
+
+.project-options:hover .options-dropdown {
+    display: block;
+}
+
+.options-dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.options-dropdown li {
+    padding: 10px;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.options-dropdown li:hover {
+    background-color: #f4f4f4;
+}
+
+/* Botão para criar novo projeto */
+.create-project-button {
+    background-color: #28a745;
+    color: white;
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-project-button:hover {
+    background-color: #218838;
+}
+
+/* Botão de voltar */
+.close-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    color: #000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-button:hover {
+    background-color: #f44336;
+    border-color: #fff;
+    color: #fff;
+}
+
+.close-button:focus {
+    outline: none;
+}
+
+/* Barra de pesquisa */
+.search-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.search-input {
+    width: 80%;
+    max-width: 800px;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 768px) {
+    .projects-container {
+        padding: 1rem;
+    }
+
+    .project-card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .search-input {
+        width: 90%;
+    }
+
+    .create-project-button {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .projects-container {
+        padding: 0.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .project-card {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .search-input {
+        font-size: 14px;
+    }
+}

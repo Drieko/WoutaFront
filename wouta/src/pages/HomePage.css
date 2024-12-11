@@ -1,0 +1,227 @@
+html,
+body {
+    height: 100%; /* Garante que o HTML e o body ocupem 100% da altura */
+    margin: 0; /* Remove as margens padrão */
+    overflow: hidden; /* Impede a rolagem da página */
+}
+/* Definir uma cor de fundo mais suave */
+.home-container {
+    background-color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Arial", sans-serif;
+    text-align: center;
+    position: relative; /* Necessário para o posicionamento absoluto do user-info */
+    overflow: hidden; /* Garante que não haja rolagem dentro da home-container */
+}
+
+/* Estilo para o título da HomePage */
+.home-header h1 {
+    font-size: 3rem;
+    color: black; /* Verde agradável */
+    margin-bottom: 20px;
+}
+
+/* Estilo para a descrição da HomePage */
+.home-header p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 30px;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* Estilo para os botões de ação */
+.home-actions {
+    display: flex;
+    gap: 20px;
+}
+
+/* Estilo para o botão de Entrar */
+.login-button {
+    background-color: blue;
+    color: white;
+}
+
+.login-button:hover {
+    background-color: blue;
+}
+
+/* Estilo para o botão de Projetos */
+.button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para as informações do usuário no canto superior direito */
+.user-info {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #ffffff; /* Fundo branco para maior contraste */
+    padding: 12px 16px; /* Aumentei o padding para mais espaçamento */
+    border-radius: 8px; /* Bordas arredondadas mais suaves */
+    font-size: 0.95rem;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra mais forte para destacar */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Espaço igual entre os elementos */
+    width: auto;
+    max-width: 250px; /* Limita o tamanho máximo */
+    z-index: 1000; /* Garante que esteja acima de outros elementos */
+}
+
+.user-photo {
+    width: 40px; /* Aumentei o tamanho da foto */
+    height: 40px; /* Aumentei o tamanho da foto */
+    border-radius: 50%;
+    background-color: #f0f0f0; /* Fundo mais claro */
+    margin-right: 12px; /* Mais espaçamento entre a foto e os detalhes */
+    border: 2px solid #007bff; /* Adicionei uma borda azul para destaque */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Tamanho do ícone */
+    color: white; /* Cor do ícone */
+    background-color: #f0f0f0; /* Cor padrão (substituída pelo JavaScript) */
+    overflow: hidden; /* Esconde qualquer conteúdo que ultrapasse o limite */
+}
+
+.user-initial {
+    font-size: 24px; /* Tamanho da inicial */
+}
+
+/* Detalhes do usuário */
+.user-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+/* Tamanho e estilo do username */
+.username {
+    font-weight: bold;
+    font-size: 1rem; /* Diminui um pouco o tamanho do nome */
+    color: #222;
+}
+
+.user-id {
+    font-size: 0.85rem; /* Menor que o nome */
+    color: #555; /* Tom intermediário para menos destaque */
+}
+
+/* Ajuste para o botão de notificação */
+.notification-button {
+    background-color: #f9f9f9; /* Fundo claro */
+    border: 1px solid #ddd; /* Borda discreta */
+    border-radius: 50%; /* Forma circular */
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem; /* Tamanho do ícone */
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Estilo de quando as notificações estão sendo exibidas */
+.notifications {
+    position: fixed;
+    top: 80px; /* Distância do topo */
+    right: 10px; /* Distância da borda direita */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 250px;
+}
+
+.notifications ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notifications li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.notifications button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 15px;
+}
+
+.notification-button {
+    background-color: #f9f9f9; /* Fundo claro */
+    border: 1px solid #ddd; /* Borda discreta */
+    border-radius: 50%; /* Forma circular */
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem; /* Tamanho do ícone */
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-left: 15px; /* Adiciona espaçamento à esquerda */
+}
+
+.notifications .reject {
+    background-color: #dc3545;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    color: #000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-button:hover {
+    background-color: #f44336;
+    border-color: #fff;
+    color: #fff;
+}
+
+.close-button:focus {
+    outline: none;
+}
