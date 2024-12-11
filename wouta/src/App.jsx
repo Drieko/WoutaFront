@@ -14,14 +14,16 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/projetos" element={<ProjectPage />} />
-        <Route path="/create" element={<CreateProjectPage />} />
-        <Route path="/edit/:projectId" element={<EditProjectPage />} />
+        <Route path="/Home" element={<HomePage />} />
+        <Route path="/Projetos" element={<ProjectPage />} />
+        <Route path="/Create" element={<CreateProjectPage />} />
+        <Route path="/Projeto/Edit/:projectId" element={<EditProjectPage />} />
         <Route path="/projeto/:projectId" element={<ProjectDetailPage />}  />
+        <Route path="/tarefa/:taskId" element={<TaskDetailPage />} />
+        <Route path="/tarefa/edit/:taskId" element={<EditTaskPage />} />
         <Route path="/convites" element={<Convites />} /> {/* Adicionado o componente Convites */}
       </Routes>
     </Router>
