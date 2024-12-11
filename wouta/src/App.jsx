@@ -8,6 +8,8 @@ import ProjectPage from "./pages/ProjectPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import EditProjectPage from "./pages/EditProjectPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
+import TaskDetailPage from "./pages/TaskDetailPage";
+import EditTaskPage from "./pages/EditTaskPage";
 import Convites from "./Component/Convites";
 
 const App = () => {

@@ -87,7 +87,7 @@ const TaskDetailPage = () => {
     <div className="task-detail-container">
       <div className="task-detail-header">
         {/* Botão de voltar */}
-        <button className="back-button" onClick={() => navigate(`/projetos/${projectId}`)}>
+        <button className="back-button" onClick={() => navigate(`/projetos/`)}>
           <FaArrowLeft /> Voltar
         </button>
 

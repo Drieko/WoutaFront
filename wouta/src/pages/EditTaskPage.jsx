@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { p } from "react-router/dist/production/fog-of-war-CbNQuoo8";
 
 const EditTaskPage = () => {
   const { taskId } = useParams();  // Obtém o taskId da URL
