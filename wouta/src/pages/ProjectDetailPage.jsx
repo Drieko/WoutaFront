@@ -170,6 +170,11 @@ const ProjectDetailsPage = () => {
     }
   };
 
+  const handleTaskClick = (taskId) => {
+    // Redireciona para a página de detalhes da tarefa
+    navigate(`/tarefa/${taskId}`);
+  };
+
   if (loading) {
     return <div>Carregando...</div>;
   }
@@ -205,7 +210,11 @@ const ProjectDetailsPage = () => {
           <p>Não há tarefas para este projeto.</p>
         ) : (
           tasks.map((task) => (
-            <div key={task.id} className={`task-card ${task.prioridade}`}>
+            <div
+              key={task.id}
+              className={`task-card ${task.prioridade}`}
+              onClick={() => handleTaskClick(task.id)} // Função de clique
+            >
               <h3>{task.titulo}</h3>
               <p>{task.description}</p>
               <p><strong>Prazo:</strong> {task.prazo}</p>
