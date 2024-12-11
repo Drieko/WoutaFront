@@ -66,16 +66,26 @@ const EditProjectPage = () => {
         return;
       }
 
+      // Filtra e valida os IDs dos usuários
+      const validUserIds = projectUsers
+        .map((user) => user.id)  // Extraímos os IDs dos usuários
+        .filter((id) => id != null);  // Filtramos qualquer valor null ou undefined
+
+      // Adiciona o userId do usuário atual
+      const updatedUserIds = [...new Set([...validUserIds, userId])];
+
       const updatedProject = {
         titulo: projectName,
         description: projectDescription,
         prazo: projectPrazo ? projectPrazo : null,
         status: projectStatus,
-        usuarios: [...new Set([...projectUsers.map((user) => user.id), userId])], 
-        // Garante que o usuário atual será incluído e evita duplicatas
+        usuarios: updatedUserIds, // Apenas os IDs dos usuários
       };
 
-      await axios.put(
+      console.log("Projeto a ser atualizado:", updatedProject); // Verifique os dados que estão sendo enviados
+      console.log("Usuários:", updatedUserIds);  // Verifique o conteúdo de 'usuarios'
+
+      const response = await axios.put(
         `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/projetos/${projectId}/`,
         updatedProject,
         {
@@ -85,9 +95,11 @@ const EditProjectPage = () => {
         }
       );
 
+      // Se a requisição for bem-sucedida
       alert("Projeto atualizado com sucesso!");
       navigate("/projetos");
     } catch (err) {
+      // Se houver erro, exibe uma mensagem mais detalhada
       setError(`Erro ao atualizar o projeto: ${err.response?.data?.detail || err.message}`);
       console.error(err);
     } finally {
