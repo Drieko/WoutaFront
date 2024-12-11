@@ -104,12 +104,11 @@ const ProjectDetailsPage = () => {
 
   const handleCreateComment = async () => {
     const token = localStorage.getItem("token");  // Pega o token armazenado no localStorage
-  
     if (!token) {
       alert("Você precisa estar autenticado para comentar.");
       return;
     }
-  
+
     try {
       const response = await axios.post(
         `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/comentariosProjeto/${projectId}/`,
@@ -123,7 +122,7 @@ const ProjectDetailsPage = () => {
           },
         }
       );
-  
+
       setComentarios([response.data, ...comentarios]);
       setNewComment(""); // Limpa o campo de comentário
     } catch (error) {
@@ -170,6 +169,11 @@ const ProjectDetailsPage = () => {
     }
   };
 
+  // Função para redirecionar para a página da tarefa
+  const handleTaskClick = (taskId) => {
+    navigate(`/tarefa/${taskId}`);
+  };
+
   if (loading) {
     return <div>Carregando...</div>;
   }
@@ -205,7 +209,11 @@ const ProjectDetailsPage = () => {
           <p>Não há tarefas para este projeto.</p>
         ) : (
           tasks.map((task) => (
-            <div key={task.id} className={`task-card ${task.prioridade}`}>
+            <div 
+              key={task.id} 
+              className={`task-card ${task.prioridade}`} 
+              onClick={() => handleTaskClick(task.id)}  // Navegação para a página da tarefa
+            >
               <h3>{task.titulo}</h3>
               <p>{task.description}</p>
               <p><strong>Prazo:</strong> {task.prazo}</p>

@@ -84,7 +84,7 @@ const EditTaskPage = () => {
       };
 
       const response = await axios.put(
-        `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/tarefa/edit/${taskId}/`,
+        `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/tarefas/${taskId}/`,
         updatedTask,
         {
           headers: {
