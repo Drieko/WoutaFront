@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { p } from "react-router/dist/production/fog-of-war-CbNQuoo8";
 
 const EditTaskPage = () => {
   const { taskId } = useParams();  // Obtém o taskId da URL
@@ -10,6 +11,7 @@ const EditTaskPage = () => {
   const [taskDescription, setTaskDescription] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
   const [taskDeadline, setTaskDeadline] = useState("");
+  const [projectId, setProjectId] = useState("");  // Armazena o ID do projeto
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -41,6 +43,7 @@ const EditTaskPage = () => {
           setTaskDescription(task.description);
           setTaskPriority(task.prioridade);
           setTaskDeadline(task.prazo);
+          setProjectId(task.projeto);  // Armazena o ID do projeto
         } else {
           setError("Erro ao buscar dados da tarefa.");
         }
@@ -60,7 +63,7 @@ const EditTaskPage = () => {
     setLoading(true);
     setError("");
 
-    if (!taskName || !taskDescription || !taskPriority) {
+    if (!taskName || !taskDescription || !taskPriority || !projectId) {
       setError("Por favor, preencha todos os campos obrigatórios.");
       setLoading(false);
       return;
@@ -81,10 +84,11 @@ const EditTaskPage = () => {
         description: taskDescription,
         prazo: taskDeadline ? taskDeadline : null,
         prioridade: taskPriority,
+        projeto: projectId,  // Envia o ID do projeto
       };
 
       const response = await axios.put(
-        `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/tarefas/edit/${taskId}/`,
+        `https://sistemadegerenciamentodeprojetosback.onrender.com/restrito/tarefas/${taskId}/`,
         updatedTask,
         {
           headers: {
@@ -100,7 +104,6 @@ const EditTaskPage = () => {
         setError("Erro ao atualizar a tarefa.");
       }
     } catch (err) {
-      // Exibe o erro detalhado no console para facilitar a depuração
       console.error("Erro ao salvar tarefa:", err.response?.data || err.message);
       setError(`Erro ao atualizar a tarefa: ${err.response?.data?.detail || err.message}`);
     } finally {
@@ -109,7 +112,7 @@ const EditTaskPage = () => {
   };
 
   if (loading) {
-    return <p>Carregando...</p>;
+    return <p> Carregando... </p>;
   }
 
   return (
