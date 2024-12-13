@@ -1,4 +1,5 @@
 // src/App.js
+// não tera nova versão 
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";

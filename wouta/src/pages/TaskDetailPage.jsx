@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaEdit, FaTrash } from 'react-icons/fa';
-import './TaskDetailPage.css';
+import './TaskDetailpage.css';
 
 const TaskDetailPage = () => {
   const { taskId, projectId } = useParams(); // Obtém taskId e projectId da URL
